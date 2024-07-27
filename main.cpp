@@ -1,9 +1,9 @@
 #include <iostream>
 #include "LinearList/MySequentialList.h"
-#include "LinearList/MyLinkList.h"
+#include "LinearList/MyLinkedList.h"
 using namespace std;
 
-void show(const MyLinkList<int>& list) {
+void show(const MyLinkedList<int>& list) {
     int n = list.size();
     cout << "size is " << n << endl;
     for (int i = 0; i != n; ++i) {
@@ -14,7 +14,7 @@ void show(const MyLinkList<int>& list) {
 
 int main()
 {
-    MyLinkList<int> list;
+    MyLinkedList<int> list;
     int n = list.size();
 //    cout << "size is " << n << endl;
 

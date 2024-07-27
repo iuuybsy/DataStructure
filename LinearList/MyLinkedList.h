@@ -6,12 +6,12 @@
 #include "Node.h"
 
 template <typename T>
-class MyLinkList: public MyLinearListBase<T> {
+class MyLinkedList: public MyLinearListBase<T> {
 public:
-    MyLinkList(): head(nullptr), list_size(0) {};
-    MyLinkList(const MyLinkList<T>& another);
+    MyLinkedList(): head(nullptr), list_size(0) {};
+    MyLinkedList(const MyLinkedList<T>& another);
 
-    virtual ~MyLinkList();
+    virtual ~MyLinkedList();
     virtual bool empty() const;
     virtual int size() const;
     virtual T& get(int target_index) const;
@@ -26,7 +26,7 @@ private:
 };
 
 template <typename T>
-MyLinkList<T>::MyLinkList(const MyLinkList<T>& another): list_size(0), head(nullptr) {
+MyLinkedList<T>::MyLinkedList(const MyLinkedList<T>& another): list_size(0), head(nullptr) {
     int n = another.size();
     for (int i = 0; i != n; ++i) {
         this->insert(i, another.get(i));
@@ -34,7 +34,7 @@ MyLinkList<T>::MyLinkList(const MyLinkList<T>& another): list_size(0), head(null
 }
 
 template <typename T>
-MyLinkList<T>::~MyLinkList() {
+MyLinkedList<T>::~MyLinkedList() {
     while (head != nullptr) {
         Node<T>* next_ptr = head->next;
         delete head;
@@ -44,17 +44,17 @@ MyLinkList<T>::~MyLinkList() {
 }
 
 template <typename T>
-bool MyLinkList<T>::empty() const {
+bool MyLinkedList<T>::empty() const {
     return this->list_size == 0;
 }
 
 template <typename T>
-int MyLinkList<T>::size() const {
+int MyLinkedList<T>::size() const {
     return this->list_size;
 }
 
 template <typename T>
-void MyLinkList<T>::checkIndex(int index) const
+void MyLinkedList<T>::checkIndex(int index) const
 {
     if (index < 0 || index >= this->list_size)
     {
@@ -65,7 +65,7 @@ void MyLinkList<T>::checkIndex(int index) const
 }
 
 template <typename T>
-T& MyLinkList<T>::get(int target_index) const {
+T& MyLinkedList<T>::get(int target_index) const {
     this->checkIndex(target_index);
     Node<T>* target = head;
     for (int i = 0; i != target_index; ++i)
@@ -74,7 +74,7 @@ T& MyLinkList<T>::get(int target_index) const {
 }
 
 template <typename T>
-int MyLinkList<T>::indexOf(const T& element) const {
+int MyLinkedList<T>::indexOf(const T& element) const {
     int index = -1, count = -1;
     Node<T>* target = head;
     while(target) {
@@ -89,7 +89,7 @@ int MyLinkList<T>::indexOf(const T& element) const {
 }
 
 template <typename T>
-void MyLinkList<T>::erase(int index) {
+void MyLinkedList<T>::erase(int index) {
     this->checkIndex(index);
     if (index == 0) {
         Node<T>* temp_ptr = head->next;
@@ -113,7 +113,7 @@ void MyLinkList<T>::erase(int index) {
 }
 
 template <typename T>
-void MyLinkList<T>::insert(int index, const T& element) {
+void MyLinkedList<T>::insert(int index, const T& element) {
     if (index == 0) {
         Node<T>* old_head = head;
         head = new Node<T>(element);
