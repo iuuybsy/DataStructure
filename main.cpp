@@ -1,47 +1,28 @@
 #include <iostream>
 #include "LinearList/MySequentialList.h"
+#include "LinearList/MyLinkList.h"
 using namespace std;
 
+void show(const MyLinkList<int>& list) {
+    int n = list.size();
+    cout << "size is " << n << endl;
+    for (int i = 0; i != n; ++i) {
+        cout << list.get(i) << " ";
+    }
+    cout << endl << endl;
+}
 
 int main()
 {
-    MySequentialList<int> my_list(3);
-    cout << "Initial size is " << my_list.size() << endl;
-    cout << "Initial capacity is " << my_list.capacity() << endl;
+    MyLinkList<int> list;
+    int n = list.size();
+//    cout << "size is " << n << endl;
 
-    my_list.insert(0, 1);
-    my_list.insert(1, 2);
-    my_list.insert(2, 3);
-    cout << "Size is " << my_list.size() << endl;
-    cout << "Capacity is " << my_list.capacity() << endl;
-    for (int i = 0; i != my_list.size(); ++i)
-        cout << my_list.get(i) << " ";
-    cout << endl;
+    for (int i = 0; i != 10; ++i) {
+        list.insert(i, i);
+        show(list);
+    }
 
-    my_list.insert(0, 1);
-    my_list.insert(0, 2);
-    my_list.insert(0, 3);
-    cout << "Size is " << my_list.size() << endl;
-    cout << "Capacity is " << my_list.capacity() << endl;
-    for (int i = 0; i != my_list.size(); ++i)
-        cout << my_list.get(i) << " ";
-    cout << endl;
-
-    my_list.insert(0, 0);
-    cout << "Size is " << my_list.size() << endl;
-    cout << "Capacity is " << my_list.capacity() << endl;
-    for (int i = 0; i != my_list.size(); ++i)
-        cout << my_list.get(i) << " ";
-    cout << endl;
-
-    my_list.insert(1, 0);
-    cout << "Size is " << my_list.size() << endl;
-    cout << "Capacity is " << my_list.capacity() << endl;
-    cout << &my_list.get(0) << endl;
-
-    my_list.insert(1, 0);
-    cout << "Size is " << my_list.size() << endl;
-    cout << "Capacity is " << my_list.capacity() << endl;
-    cout << &my_list.get(0) << endl;
-
+    cout << list.indexOf(4) << endl;
+    cout << list.get(3) << endl;
 }
