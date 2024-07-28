@@ -1,9 +1,10 @@
 #include <iostream>
 #include "LinearList/MySequentialList.h"
 #include "LinearList/MyLinkedList.h"
+#include "LinearList/MyDoublyLinkedList.h"
 using namespace std;
 
-void show(const MyLinkedList<int>& list) {
+void show(const MyDoublyLinkedList<int>& list) {
     int n = list.size();
     cout << "size is " << n << endl;
     for (int i = 0; i != n; ++i) {
@@ -14,12 +15,17 @@ void show(const MyLinkedList<int>& list) {
 
 int main()
 {
-    MyLinkedList<int> list;
+    MyDoublyLinkedList<int> list;
     int n = list.size();
-//    cout << "size is " << n << endl;
+    cout << "size is " << n << endl;
 
     for (int i = 0; i != 10; ++i) {
         list.insert(i, i);
+        show(list);
+    }
+
+    for (int i = 0; i != 3; ++i) {
+        list.erase(1);
         show(list);
     }
 

@@ -14,10 +14,10 @@ template <typename T>
 class DoublyNode {
 public:
     T val;
-    Node<T>* next;
-    Node<T>* previous;
-    DoublyNode(): next(nullptr), previous(nullptr) {};
-    DoublyNode(const T& val_): val(val_), next(nullptr), previous(nullptr) {};
+    DoublyNode<T>* next;
+    DoublyNode<T>* prev;
+    DoublyNode(): next(nullptr), prev(nullptr) {};
+    DoublyNode(const T& val_): val(val_), next(nullptr), prev(nullptr) {};
 };
 
 #endif //DATASTRUCTURE_NODE_H
