@@ -3,7 +3,7 @@
 
 #include <sstream>
 #include "MyListBase.h"
-#include "Node.h"
+#include "ListNode.h"
 
 template <typename T>
 class MyDoublyLinkedList: public MyLinearListBase<T> {
@@ -21,8 +21,8 @@ public:
 
 private:
     int list_size;
-    DoublyNode<T>* head;
-    DoublyNode<T>* tail;
+    DoublyListNode<T>* head;
+    DoublyListNode<T>* tail;
     void checkIndex(int index) const;
 };
 
@@ -37,7 +37,7 @@ list_size(0), head(nullptr), tail(nullptr) {
 template <typename T>
 MyDoublyLinkedList<T>::~MyDoublyLinkedList() {
     while (head != nullptr) {
-        DoublyNode<T>* next_ptr = head->next;
+        DoublyListNode<T>* next_ptr = head->next;
         delete head;
         head = nullptr;
         head = next_ptr;
@@ -68,7 +68,7 @@ void MyDoublyLinkedList<T>::checkIndex(int index) const
 template <typename T>
 T& MyDoublyLinkedList<T>::get(int target_index) const {
     this->checkIndex(target_index);
-    DoublyNode<T>* target = head;
+    DoublyListNode<T>* target = head;
     for (int i = 0; i != target_index; ++i)
         target = target->next;
     return (*target).val;
@@ -77,7 +77,7 @@ T& MyDoublyLinkedList<T>::get(int target_index) const {
 template <typename T>
 int MyDoublyLinkedList<T>::indexOf(const T& element) const {
     int index = -1, count = -1;
-    DoublyNode<T>* target = head;
+    DoublyListNode<T>* target = head;
     while(target) {
         ++count;
         if ((*target).val == element) {
@@ -95,22 +95,22 @@ void MyDoublyLinkedList<T>::erase(int index) {
     int mid = list_size / 2;
     if (index <= mid) {
         if (index == 0) {
-            DoublyNode<T>* old_head = head;
+            DoublyListNode<T>* old_head = head;
             head = head->next;
             head->prev = nullptr;
             delete old_head;
             old_head = nullptr;
         } else {
             int count = 0;
-            DoublyNode<T>* fast_ptr = head;
-            DoublyNode<T>* slow_ptr = head;
+            DoublyListNode<T>* fast_ptr = head;
+            DoublyListNode<T>* slow_ptr = head;
             while (count != index) {
                 if (fast_ptr != head)
                     slow_ptr = slow_ptr->next;
                 fast_ptr = fast_ptr->next;
                 ++count;
             }
-            DoublyNode<T>* target = fast_ptr;
+            DoublyListNode<T>* target = fast_ptr;
             fast_ptr = fast_ptr->next;
             slow_ptr->next = fast_ptr;
             fast_ptr->prev = slow_ptr;
@@ -119,22 +119,22 @@ void MyDoublyLinkedList<T>::erase(int index) {
         }
     } else {
         if (index == list_size - 1) {
-            DoublyNode<T>* old_tail = tail;
+            DoublyListNode<T>* old_tail = tail;
             tail = tail->prev;
             tail->next = nullptr;
             delete old_tail;
             old_tail = nullptr;
         } else {
             int count = 1;
-            DoublyNode<T>* fast_ptr = tail;
-            DoublyNode<T>* slow_ptr = tail;
+            DoublyListNode<T>* fast_ptr = tail;
+            DoublyListNode<T>* slow_ptr = tail;
             while (count != list_size - index) {
                 if (fast_ptr != tail)
                     slow_ptr = slow_ptr->prev;
                 fast_ptr = fast_ptr->prev;
                 ++count;
             }
-            DoublyNode<T>* target = fast_ptr;
+            DoublyListNode<T>* target = fast_ptr;
             fast_ptr = fast_ptr->prev;
             slow_ptr->prev = fast_ptr;
             fast_ptr->next= slow_ptr;
@@ -153,28 +153,28 @@ void MyDoublyLinkedList<T>::insert(int index, const T& element) {
         str << "Index out of range!";
         throw str;
     } else if (list_size == 0) {
-        head = new DoublyNode<T>(element);
+        head = new DoublyListNode<T>(element);
         tail = head;
     } else {
         int mid = list_size / 2;
         if (index <= mid) {
             if (index == 0) {
-                DoublyNode<T>* new_head = new DoublyNode<T>(element);
+                DoublyListNode<T>* new_head = new DoublyListNode<T>(element);
                 new_head->next = head;
                 head->prev = new_head;
                 head = new_head;
                 new_head = nullptr;
             } else {
                 int count = 0;
-                DoublyNode<T>* fast_ptr = head;
-                DoublyNode<T>* slow_ptr = head;
+                DoublyListNode<T>* fast_ptr = head;
+                DoublyListNode<T>* slow_ptr = head;
                 while (count != index) {
                     ++count;
                     if (fast_ptr != head)
                         slow_ptr = slow_ptr->next;
                     fast_ptr = fast_ptr->next;
                 }
-                DoublyNode<T>* target = new DoublyNode<T>(element);
+                DoublyListNode<T>* target = new DoublyListNode<T>(element);
                 slow_ptr->next = target;
                 target->prev = slow_ptr;
                 target->next = fast_ptr;
@@ -182,22 +182,22 @@ void MyDoublyLinkedList<T>::insert(int index, const T& element) {
             }
         } else {
             if (index == list_size) {
-                DoublyNode<T>* new_tail = new DoublyNode<T>(element);
+                DoublyListNode<T>* new_tail = new DoublyListNode<T>(element);
                 tail->next = new_tail;
                 new_tail->prev = tail;
                 tail = new_tail;
                 new_tail = nullptr;
             } else {
                 int count = 0;
-                DoublyNode<T>* fast_ptr = tail;
-                DoublyNode<T>* slow_ptr = tail;
+                DoublyListNode<T>* fast_ptr = tail;
+                DoublyListNode<T>* slow_ptr = tail;
                 while (count != list_size - index) {
                     ++count;
                     if (fast_ptr != tail)
                         slow_ptr = slow_ptr->prev;
                     fast_ptr = fast_ptr->prev;
                 }
-                DoublyNode<T>* target = new DoublyNode<T>(element);
+                DoublyListNode<T>* target = new DoublyListNode<T>(element);
                 slow_ptr->prev = target;
                 target->next = slow_ptr;
                 target->prev = fast_ptr;

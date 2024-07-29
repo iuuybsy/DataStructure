@@ -3,7 +3,7 @@
 
 #include <sstream>
 #include "MyListBase.h"
-#include "Node.h"
+#include "ListNode.h"
 
 template <typename T>
 class MyLinkedList: public MyLinearListBase<T> {
@@ -21,7 +21,7 @@ public:
 
 private:
     int list_size;
-    Node<T>* head;
+    ListNode<T>* head;
     void checkIndex(int index) const;
 };
 
@@ -36,7 +36,7 @@ MyLinkedList<T>::MyLinkedList(const MyLinkedList<T>& another): list_size(0), hea
 template <typename T>
 MyLinkedList<T>::~MyLinkedList() {
     while (head != nullptr) {
-        Node<T>* next_ptr = head->next;
+        ListNode<T>* next_ptr = head->next;
         delete head;
         head = nullptr;
         head = next_ptr;
@@ -67,7 +67,7 @@ void MyLinkedList<T>::checkIndex(int index) const
 template <typename T>
 T& MyLinkedList<T>::get(int target_index) const {
     this->checkIndex(target_index);
-    Node<T>* target = head;
+    ListNode<T>* target = head;
     for (int i = 0; i != target_index; ++i)
         target = target->next;
     return (*target).val;
@@ -76,7 +76,7 @@ T& MyLinkedList<T>::get(int target_index) const {
 template <typename T>
 int MyLinkedList<T>::indexOf(const T& element) const {
     int index = -1, count = -1;
-    Node<T>* target = head;
+    ListNode<T>* target = head;
     while(target) {
         ++count;
         if ((*target).val == element) {
@@ -92,13 +92,13 @@ template <typename T>
 void MyLinkedList<T>::erase(int index) {
     this->checkIndex(index);
     if (index == 0) {
-        Node<T>* temp_ptr = head->next;
+        ListNode<T>* temp_ptr = head->next;
         delete head;
         head = temp_ptr;
     } else {
         int count = 0;
-        Node<T>* fast_ptr = head;
-        Node<T>* slow_ptr = head;
+        ListNode<T>* fast_ptr = head;
+        ListNode<T>* slow_ptr = head;
         while (count != index) {
             if (fast_ptr != head)
                 slow_ptr = slow_ptr->next;
@@ -115,29 +115,29 @@ void MyLinkedList<T>::erase(int index) {
 template <typename T>
 void MyLinkedList<T>::insert(int index, const T& element) {
     if (index == 0) {
-        Node<T>* old_head = head;
-        head = new Node<T>(element);
+        ListNode<T>* old_head = head;
+        head = new ListNode<T>(element);
         head->next = old_head;
     } else if (index == this->list_size) {
-        Node<T>* ptr = head;
+        ListNode<T>* ptr = head;
         while(ptr->next)
             ptr = ptr->next;
-        ptr->next = new Node<T>(element);
+        ptr->next = new ListNode<T>(element);
     } else if (index < 0 || index > list_size) {
         std::ostringstream str;
         str << "Index out of range!";
         throw str;
     } else {
         int count = -1;
-        Node<T>* fast_ptr = head;
-        Node<T>* slow_ptr = head;
+        ListNode<T>* fast_ptr = head;
+        ListNode<T>* slow_ptr = head;
         while (count != index) {
             ++count;
             if (fast_ptr != head)
                 slow_ptr = slow_ptr->next;
             fast_ptr = fast_ptr->next;
         }
-        slow_ptr->next = new Node<T>(element);
+        slow_ptr->next = new ListNode<T>(element);
         slow_ptr->next->next = fast_ptr;
     }
     ++list_size;
